@@ -53,8 +53,8 @@ app.get('/newspaper', (req, res)=>{
 
 app.get('/news/:newspaperId', async (req, res)=>{
     const newspaperId = req.params.newspaperId
-    const newspaper = newspapers.filter(newspaper => newspaper.name == newspaperId)
-    console.log(newspaper);
+    const newspaperAddress = newspapers.filter(newspaper => newspaper.name == newspaperId)[0].address
+    console.log(newspaperAddress);
 })
 app.get('/news', (req, res)=>{
     // axios.get('https://www.theguardian.com/us/environment')
