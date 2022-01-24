@@ -9,15 +9,18 @@ const app = express();
 const newspapers = [
     {
         name: 'thetimes',
-        address: 'https://www.thetimes.co.uk/environment/climate-change'
+        address: 'https://www.thetimes.co.uk/environment/climate-change',
+        base: 'https://www.thetimes.co.uk'
     },
     {
         name: 'guardian',
-        address: 'https://www.theguardian.com/environment/climate-change'
+        address: 'https://www.theguardian.com/environment/climate-change',
+        base: 'https://www.theguardian.co.uk'
     },
     {
         name: 'telegraph',
-        address: 'https://www.telegraph.co.uk/climate-change'
+        address: 'https://www.telegraph.co.uk/climate-change',
+        base: 'https://www.telegrahp.co.uk'
     }
 ]
 const storage = [];
@@ -33,7 +36,7 @@ newspapers.forEach(newspaper =>{
                 const url = $(this).attr('href');
                 storage.push({
                     title,
-                    url,
+                    url: newspaper.base + url,
                     source: newspaper.name
                 })
             })
@@ -44,8 +47,14 @@ newspapers.forEach(newspaper =>{
 app.get('/', (req, res)=>{
     res.json('Welcome to my Climate Change News API')
 })
-app.get('/newspaper', (reg, res)=>{
+app.get('/newspaper', (req, res)=>{
     res.json(storage);
+})
+
+app.get('/news/:newspaperId', async (req, res)=>{
+    const newspaperId = req.params.newspaperId
+    const newspaper = newspapers.filter(newspaper => newspaper.name == newspaperId)
+    console.log(newspaper);
 })
 app.get('/news', (req, res)=>{
     // axios.get('https://www.theguardian.com/us/environment')
